@@ -1,2 +1,4 @@
-*.txt
+*.yaml
 .env
+notes.yaml
+notes.txt
