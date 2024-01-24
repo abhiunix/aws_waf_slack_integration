@@ -49,9 +49,8 @@ pip3 install -r requirements.txt
 5. Create a incoming webhooks url for your channel.
 ![](images/incomingWebhooks.png)
 
-6. Now create a `.env` file (if not present already) Update it with your slack token and webhooks.
+6. Now create a `.env` file (if not present already) Update it with your slack webhooks.
 ```
-SLACK_TOKEN_=xapp-1-xyz
 webhook_url=https://hooks.slack.com/services/abc/xyz
 ```
 7. Now create a Slash Command from Slack api
