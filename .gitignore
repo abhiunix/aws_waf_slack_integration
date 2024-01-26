@@ -1,4 +1,11 @@
-*.yaml
+notes*
 .env
-notes.yaml
-notes.txt
+*.sh
+*.zip
+log.txt
+nohup.out
+.DS_Store
+__pycache__/
+notes
+venv
+aws_keys.py

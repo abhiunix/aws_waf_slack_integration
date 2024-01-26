@@ -2,6 +2,10 @@ import time
 import addToBlackList
 import removeIPFromBlackList
 
+# if len(sys.argv) != 6:
+#     print("Usage: python script.py [IP address in CIDR formate: 49.207.216.25/32][days] [hours] [minutes] [seconds]")
+#     sys.exit(1)
+
 def autoAddRemoveIP(ip, days, hours, minutes, seconds):
     def execute_after_duration(ip, duration):
         days, hours, minutes, seconds = map(int, duration)
