@@ -1,0 +1,1 @@
+docker run -p 8002:8002 -v ~/.aws:/root/.aws:ro -e AWS_DEFAULT_REGION=ap-south-1 -e --profile=curefit-security-devs your_image_name

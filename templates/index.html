@@ -1,0 +1,26 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Management Dashboard</title>
+</head>
+<body>
+    <h1>IP Management Dashboard</h1>
+
+    <h2>Block IP</h2>
+    <form action="/blockip" method="post">
+        <label for="text">IP and Duration:</label><br>
+        <input type="text" id="text" name="text" placeholder="192.168.1.1/32 1 0 0 0"><br>
+        <input type="hidden" id="user_name" name="user_name" value="YourUserName">
+        <input type="hidden" id="team_domain" name="team_domain" value="YourTeamDomain">
+        <input type="hidden" id="channel_name" name="channel_name" value="YourChannelName">
+        <input type="submit" value="Block IP">
+    </form>
+
+    <h2>List Blocked IPs</h2>
+    <button onclick="window.location.href='/listBlockedIPs';">List Blocked IPs</button>
+</body>
+</html>
