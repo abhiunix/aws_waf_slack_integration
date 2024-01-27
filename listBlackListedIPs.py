@@ -62,18 +62,16 @@ def send_to_slack():
 
 def main():
     save_blacklistedIPs()
-    
     count = count_lines()
+    print(f"Number of blacklistedIPs IPs are: {count}")
     with open('blacklistedIPs.txt', 'r') as file:
         ip_list = file.readlines()
-        ip_message = "\n".join(ip.strip() for ip in ip_list)  # Remove any trailing newlines or spaces
-    send_to_slack()
-    # Return a dictionary with all the relevant information
-    return {
-        "file_message": "IP addresses saved to 'blacklistedIPs.txt' file.",
-        "count_message": f"Number of blacklisted IPs are: {count}",
-        "ip_message": ip_message
-    }
+        ip_message = "\n".join(ip_list)
+    sendSlackMessage.sendToSlack(webhook_url, ip_message)
+    sendSlackMessage.sendToSlack(webhook_url, f"Number of blacklistedIPs IPs are: {count}")
+    return
     
 if __name__ == "__main__":
     main()  
+
+
