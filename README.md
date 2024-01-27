@@ -1,5 +1,5 @@
 ## Description
-
+# This branch is compatible for Web
 This repository contains a Python Flask application that enables integration between AWS WAF (Web Application Firewall) and Slack. The application utilizes the slack's `Slash Command` feature to to interact with the application and uses `boto3` moudle to interact with AWS services (here WAF & Shields).
 
 ## Features
