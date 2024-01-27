@@ -35,7 +35,7 @@ To set up and use the AWS WAF Slack Integration, follow these steps:
 
 1. Clone this repository to your local machine using the following command:
 ```
-git clone https://github.com/abhiunix/aws_waf_slack_integration.git & cd aws_waf_slack_integration & touch .env
+git clone https://github.com/abhiunix/YourChannelName_slack_integration.git & cd YourChannelName_slack_integration & touch .env
 
 ```
 2.  Install the required Python packages by running the following command:

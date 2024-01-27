@@ -25,7 +25,7 @@ def blockip():
     channel_name = data.get('channel_name')
 
     try:
-        if user_name == "YourUserName" and team_domain == "YourTeamDomain" and channel_name == "YourChannelName":
+        if (user_name == "YourUserName" and team_domain == "YourTeamDomain" and channel_name == "YourChannelName"):
             parts = text.split(" ")
             ip = parts[0]
             days = int(parts[1])
@@ -47,12 +47,27 @@ def blockip():
 
 @app.route("/listBlockedIPs", methods=['GET', 'POST'])
 def listBlockedIPs():
-    result = listBlackListedIPs.main()  # This now returns a dictionary
-    if result and result["ip_message"]:  # Check if the IP message is not empty
-        response = f"<pre>{result['file_message']}\n{result['count_message']}\n\nBlocked IPs:\n{result['ip_message']}</pre>"
-        return response
-    else:
-        return "No blocked IPs found."
+    data = request.form
+    text = data.get('text')
+    user_name = data.get('user_name')
+    team_domain = data.get('team_domain')
+    channel_name = data.get('channel_name')
+    try:
+        if (user_name == "YourUserName" and team_domain == "YourTeamDomain" and channel_name == "YourChannelName"):
+            result = listBlackListedIPs.main()  # This now returns a dictionary
+            if result and result["ip_message"]:  # Check if the IP message is not empty
+                response = f"<pre>{result['file_message']}\n{result['count_message']}\n\nBlocked IPs:\n{result['ip_message']}</pre>"
+                return response
+            else:
+                return "No blocked IPs found."
+        else:
+            sendSlackMessage.sendToSlack(webhook_url, f"({user_name}) is trying to attack this bot.")
+            return "You are not authorized to perform this action."    
+            
+    except IndexError:
+        sendSlackMessage.sendToSlack(webhook_url, f"Hey {user_name}, your input is not in the correct format, please enter in this format: [IPv4inCIDR] [Days] [Hours] [Minutes] [Seconds]. eg: /blockip 162.247.74.206/32 0 0 0 60")
+        return "Input is not in the correct format."        
+
 
 
 def execute_auto_remove(ip, days, hours, minutes, seconds):
