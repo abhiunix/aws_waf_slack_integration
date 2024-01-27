@@ -9,3 +9,4 @@ __pycache__/
 notes
 venv
 aws_keys.py
+blacklistedIPs.txt
