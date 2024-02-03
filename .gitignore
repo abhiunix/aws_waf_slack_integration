@@ -10,3 +10,5 @@ notes
 venv
 aws_keys.py
 blacklistedIPs.txt
+experiment
+usage.txt

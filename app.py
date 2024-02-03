@@ -4,7 +4,7 @@ import threading
 import os
 from dotenv import load_dotenv
 import sendSlackMessage
-import listBlackListedIPs
+import listBlackListedIPs, listBlackListedIPsv6
 
 load_dotenv()   
 webhook_url = os.getenv("webhook_url")
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return "Java Server"
 # def home():
 #     return render_template_string(HTML_CODE)
 
@@ -25,7 +25,7 @@ def blockip():
     channel_name = data.get('channel_name')
 
     try:
-        if (user_name == "YourUserName" and team_domain == "YourTeamDomain" and channel_name == "YourChannelName"):
+        if user_name in ("YourUserName", "YourUserName") and team_domain == "YourTeamDomain" and channel_name == "abhi-internal":
             parts = text.split(" ")
             ip = parts[0]
             days = int(parts[1])
@@ -41,22 +41,37 @@ def blockip():
             sendSlackMessage.sendToSlack(webhook_url, f"({user_name}) is trying to attack this bot.")
             return "You are not authorized to perform this actions."
     except IndexError:
-        sendSlackMessage.sendToSlack(webhook_url, f"Input is not in the proper format, please enter in this format: [IPv4inCIDR] [Days] [Hours] [Minutes] [Seconds]. eg: /blockip 162.247.74.206/32 0 0 0 60")
+        sendSlackMessage.sendToSlack(webhook_url, f"Input is not in the proper format, please enter in this format: [IPv4inCIDR or IPv6inCIDR] [Days] [Hours] [Minutes] [Seconds]. eg: \nFormate for blocking IPv4 use /blockip 162.247.74.206/32 0 0 0 60\nFormate for blocking IPv6: /blockip 2606:54c0:7680:d28::1d3:53/128 0 0 0 60\nThis will block the given IP for 60 Seconds")
         return ""
 
-@app.route("/listBlockedIPs", methods=['GET', 'POST'])
-def listBlockedIPs():
+@app.route("/listBlockedIPv4", methods=['GET', 'POST'])
+def listBlockedIPv4():
     data = request.form
     #text = data.get('text')
     user_name = data.get('user_name')
     team_domain = data.get('team_domain')
     channel_name = data.get('channel_name')
-    if (user_name == "YourUserName" and team_domain == "YourTeamDomain" and channel_name == "YourChannelName"):
+    if user_name in ("YourUserName", "YourUserName") and team_domain == "YourTeamDomain" and channel_name == "YourChannelName":
         listBlackListedIPs.main()
     else:
             sendSlackMessage.sendToSlack(webhook_url, f"({user_name}) is trying to attack this bot.")
             return "You are not authorized to perform this action."
     return ""    
+
+@app.route("/listBlockedIPv6", methods=['GET', 'POST'])
+def listBlockedIPv6():
+    data = request.form
+    #text = data.get('text')
+    user_name = data.get('user_name')
+    team_domain = data.get('team_domain')
+    channel_name = data.get('channel_name')
+    if user_name in ("YourUserName", "YourUserName") and team_domain == "YourTeamDomain" and channel_name == "YourChannelName":
+        listBlackListedIPsv6.main()
+    else:
+            sendSlackMessage.sendToSlack(webhook_url, f"({user_name}) is trying to attack this bot.")
+            return "You are not authorized to perform this action."
+    return ""  
+
 
 def execute_auto_remove(ip, days, hours, minutes, seconds):
     autoRemoveBlacklistedIPs.autoAddRemoveIP(ip, days, hours, minutes, seconds)
