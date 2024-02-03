@@ -14,7 +14,7 @@ For example, by using the slash command `/blockip 162.247.74.206/32 0 0 0 60` in
 The slash command should be provided in the following format:
 ```
  `/blockip [IPv4inCIDR or IPv6inCIDR] [Days] [Hours] [Minutes] [Seconds]`
-  /listblockedips 
+  /listblockedipv4 
 ```
 eg: If you want to block an IPv4 for a day.
 - `/blockip 162.247.74.206/32 1 0 0 0 `
