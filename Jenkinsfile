@@ -63,7 +63,7 @@ pipeline {
                     sh """ 
                         IMAGE_ID=\$(/opt/homebrew/bin/docker images | grep 'abhiunix/aws_waf_slack_integration' | awk -F' ' '{print \$3}' | head -n 1)
                         if [ ! -z "\$IMAGE_ID" ]; then
-                            /opt/homebrew/bin/docker run -dt -p 8002:8002 -v /Users/abhijeetsingh/Downloads/scripts/.aws:/root/.aws:ro -e AWS_DEFAULT_REGION=ap-south-1 -e AWS_PROFILE=curefit-security-devs \$IMAGE_ID
+                            /opt/homebrew/bin/docker run -dt -p 8002:8002 -v /Users/abhijeetsingh/Downloads/scripts/.aws:/root/.aws:ro -e AWS_DEFAULT_REGION=ap-south-1 -e AWS_PROFILE=YourAWSprofile \$IMAGE_ID
                         else
                             echo "Image not found!"
                         fi
