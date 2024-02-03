@@ -11,6 +11,4 @@ EXPOSE 8002
 
 CMD sh -c 'python app.py'
 
-# CMD ["sh", "bash_script.sh"]
-# CMD python ./app.py
 
