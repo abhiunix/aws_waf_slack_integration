@@ -11,8 +11,14 @@ pipeline {
         }
         stage('Cloning the repo'){
             steps{
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/abhiunix/aws_waf_slack_integration']])
-                sh 'echo clone completed'        
+                script{
+                    try {
+                        checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/abhiunix/aws_waf_slack_integration']])
+                        sh 'echo clone completed'
+                    } catch (Exception e) {
+                        echo "Error: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                }        
             }
         } 
         stage('converting the repo to prod') {
@@ -47,6 +53,16 @@ pipeline {
                 }
             }
         }
+        stage('Stoping previous container'){
+            steps{
+                script{
+                    sh """
+                    /opt/homebrew/bin/docker ps | grep 8002 | awk -F' ' '{print \$1}' | xargs /opt/homebrew/bin/docker stop
+                    """
+                }
+            }
+        }
+        
         stage('Push to docker hub'){
             steps{
                 script{
@@ -57,13 +73,14 @@ pipeline {
                 }
             }
         }
+        
         stage('Run the container') {
             steps {
                 script {
                     sh """ 
                         IMAGE_ID=\$(/opt/homebrew/bin/docker images | grep 'abhiunix/aws_waf_slack_integration' | awk -F' ' '{print \$3}' | head -n 1)
                         if [ ! -z "\$IMAGE_ID" ]; then
-                            /opt/homebrew/bin/docker run -dt -p 8002:8002 -v /Users/abhijeetsingh/Downloads/scripts/.aws:/root/.aws:ro -e AWS_DEFAULT_REGION=ap-south-1 -e AWS_PROFILE=YourAWSprofile \$IMAGE_ID
+                            /opt/homebrew/bin/docker run -dt -p 8002:8002 -v /Users/abhijeetsingh/Downloads/scripts/.aws:/root/.aws:ro -e AWS_DEFAULT_REGION=ap-south-1 -e AWS_PROFILE=curefit-security-devs \$IMAGE_ID
                         else
                             echo "Image not found!"
                         fi
