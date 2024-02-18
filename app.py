@@ -25,9 +25,12 @@ def blockip():
     channel_name = data.get('channel_name')
 
     try:
-        if user_name in ("YourUserName", "YourUserName") and team_domain == "YourTeamDomain" and channel_name == "abhi-internal":
+        if user_name in ("YourUserName") and team_domain == "YourTeamDomain" and channel_name in ("YourChannelName", "abhi-internal"):
             parts = text.split(" ")
             ip = parts[0]
+            if '/' not in ip:
+                sendSlackMessage.sendToSlack(webhook_url, f"Wrong input format, {user_name}. Please use CIDR format to block the IPs.\n eg: For IPv4: 162.247.74.206/32 \n For IPv6: 2606:54c0:7680:d28::1d3:53/128")
+                return "Wrong input format, please use CIDR format to block the IPs"
             days = int(parts[1])
             hours = int(parts[2])
             minutes = int(parts[3])
@@ -51,7 +54,7 @@ def listBlockedIPv4():
     user_name = data.get('user_name')
     team_domain = data.get('team_domain')
     channel_name = data.get('channel_name')
-    if user_name in ("YourUserName", "YourUserName") and team_domain == "YourTeamDomain" and channel_name == "YourChannelName":
+    if user_name in ("YourUserName") and team_domain == "YourTeamDomain" and channel_name in ("YourChannelName", "abhi-internal"):
         listBlackListedIPs.main()
     else:
             sendSlackMessage.sendToSlack(webhook_url, f"({user_name}) is trying to attack this bot.")
@@ -65,7 +68,7 @@ def listBlockedIPv6():
     user_name = data.get('user_name')
     team_domain = data.get('team_domain')
     channel_name = data.get('channel_name')
-    if user_name in ("YourUserName", "YourUserName") and team_domain == "YourTeamDomain" and channel_name == "YourChannelName":
+    if user_name in ("YourUserName") and team_domain == "YourTeamDomain" and channel_name in ("YourChannelName", "abhi-internal"):
         listBlackListedIPsv6.main()
     else:
             sendSlackMessage.sendToSlack(webhook_url, f"({user_name}) is trying to attack this bot.")

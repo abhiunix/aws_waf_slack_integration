@@ -12,3 +12,4 @@ aws_keys.py
 blacklistedIPs.txt
 experiment
 usage.txt
+blacklistedIPv6.txt
