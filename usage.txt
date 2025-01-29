@@ -6,3 +6,6 @@ docker run -dt -p 8002:8002 -v ~/.aws:/root/.aws:ro -e AWS_DEFAULT_REGION=ap-sou
 
 # Run the ngrok server
 docker run --net=host -dt -e NGROK_AUTHTOKEN=<your_auth_token_from_https://dashboard.ngrok.com/get-started/your-authtoken> ngrok/ngrok:latest http 8002
+
+For Mac:
+docker run --net=host -dt -e NGROK_AUTHTOKEN=<your_auth_token_from_https://dashboard.ngrok.com/get-started/your-authtoken> ngrok/ngrok:latest http host.docker.internal:8055
